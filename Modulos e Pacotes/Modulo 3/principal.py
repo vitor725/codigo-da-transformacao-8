@@ -1,5 +1,5 @@
 class ListaDeTarefas:
-    def _init_(self):
+    def __init__(self):
         self.tarefas = []
 
     def adicionar_tarefa(self, tarefa):
@@ -18,10 +18,13 @@ class ListaDeTarefas:
             print("Índice inválido!")
 
     def imprimir_tarefas(self):
-        print("Lista de Tarefas:")
-        for indice, tarefa in enumerate(self.tarefas):
-            status = "Concluída" if tarefa["concluida"] else "Não Concluída"
-            print(f"{indice + 1}. {tarefa['tarefa']} - {status}")
+        if self.tarefas:
+            print("Lista de Tarefas:")
+            for indice, tarefa in enumerate(self.tarefas):
+                status = "Concluída" if tarefa["concluida"] else "Não Concluída"
+                print(f"{indice + 1}. {tarefa['tarefa']} - {status}")
+        else:
+            print("Nenhuma tarefa adicionada!")
 
 def somar(a, b):
     return a + b
@@ -46,22 +49,18 @@ def calculadora(lista_de_tarefas):
         print("3. Multiplicar")
         print("4. Dividir")
         print("5. Voltar")
-
         opcao = input("Escolha uma opção: ")
-
         if opcao == "5":
             break
         elif opcao not in ["1", "2", "3", "4"]:
             print("Opção inválida!")
             continue
-
         try:
             a = float(input("Digite o primeiro número: "))
             b = float(input("Digite o segundo número: "))
         except ValueError:
             print("Valor inválido!")
             continue
-
         if opcao == "1":
             resultado = somar(a, b)
             print(f"{a} + {b} = {resultado}")
@@ -81,15 +80,13 @@ def calculadora(lista_de_tarefas):
 
 def main():
     lista_de_tarefas = ListaDeTarefas()
-
     while True:
         print("\nOpções:")
         print("1. Gerenciar Tarefas")
         print("2. Calculadora")
-        print("3. Sair")
-
+        print("3. Imprimir Tarefas")
+        print("4. Sair")
         opcao = input("Escolha uma opção: ")
-
         if opcao == "1":
             while True:
                 print("\nOpções:")
@@ -98,33 +95,46 @@ def main():
                 print("3. Concluir Tarefa")
                 print("4. Imprimir Tarefas")
                 print("5. Voltar")
-
                 opcao_tarefa = input("Escolha uma opção: ")
-
                 if opcao_tarefa == "5":
                     break
                 elif opcao_tarefa == "1":
                     tarefa = input("Digite a tarefa: ")
                     lista_de_tarefas.adicionar_tarefa(tarefa)
                 elif opcao_tarefa == "2":
-                    indice = int(input("Digite o número da tarefa a remover: ")) - 1
-                    lista_de_tarefas.remover_tarefa(indice)
+                    lista_de_tarefas.imprimir_tarefas()
+                    try:
+                        indice = int(input("Digite o número da tarefa a remover: ")) - 1
+                        lista_de_tarefas.remover_tarefa(indice)
+                    except ValueError:
+                        print("Valor inválido!")
                 elif opcao_tarefa == "3":
-                    indice = int(input("Digite o número da tarefa a concluir: ")) - 1
-                    lista_de_tarefas.concluir_tarefa(indice)
+                    lista_de_tarefas.imprimir_tarefas()
+                    try:
+                        indice = int(input("Digite o número da tarefa a concluir: ")) - 1
+                        lista_de_tarefas.concluir_tarefa(indice)
+                    except ValueError:
+                        print("Valor inválido!")
                 elif opcao_tarefa == "4":
                     lista_de_tarefas.imprimir_tarefas()
-                else:
-                    print("Opção inválida!")
-
+                else:                    print("Opção inválida!")
         elif opcao == "2":
             calculadora(lista_de_tarefas)
-
         elif opcao == "3":
+            lista_de_tarefas.imprimir_tarefas()
+        elif opcao == "4":
+            print("Saindo...")
             break
-
-        else:
-            print("Opção inválida!")
-
+        else:            print("Opção inválida!")
 if __name__ == "__main__":
     main()
+    
+                
+                
+                    
+                    
+                    
+   
+       
+  
+                    
