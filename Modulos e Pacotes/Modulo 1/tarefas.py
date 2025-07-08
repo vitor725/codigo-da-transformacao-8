@@ -1,5 +1,5 @@
 class ListaDeTarefas:
-    def _init_(self):
+    def __init__(self):
         self.tarefas = []
 
     def adicionar_tarefa(self, tarefa):
@@ -18,14 +18,16 @@ class ListaDeTarefas:
             print("Índice inválido!")
 
     def imprimir_tarefas(self):
-        print("Lista de Tarefas:")
-        for indice, tarefa in enumerate(self.tarefas):
-            status = "Concluída" if tarefa["concluida"] else "Não Concluída"
-            print(f"{indice + 1}. {tarefa['tarefa']} - {status}")
+        if self.tarefas:
+            print("Lista de Tarefas:")
+            for indice, tarefa in enumerate(self.tarefas):
+                status = "Concluída" if tarefa["concluida"] else "Não Concluída"
+                print(f"{indice + 1}. {tarefa['tarefa']} - {status}")
+        else:
+            print("Nenhuma tarefa adicionada!")
 
 def main():
     lista_de_tarefas = ListaDeTarefas()
-
     while True:
         print("\nOpções:")
         print("1. Adicionar Tarefa")
@@ -33,18 +35,24 @@ def main():
         print("3. Concluir Tarefa")
         print("4. Imprimir Tarefas")
         print("5. Sair")
-
         opcao = input("Escolha uma opção: ")
-
         if opcao == "1":
             tarefa = input("Digite a tarefa: ")
             lista_de_tarefas.adicionar_tarefa(tarefa)
         elif opcao == "2":
-            indice = int(input("Digite o número da tarefa a remover: ")) - 1
-            lista_de_tarefas.remover_tarefa(indice)
+            lista_de_tarefas.imprimir_tarefas()
+            try:
+                indice = int(input("Digite o número da tarefa a remover: ")) - 1
+                lista_de_tarefas.remover_tarefa(indice)
+            except ValueError:
+                print("Valor inválido!")
         elif opcao == "3":
-            indice = int(input("Digite o número da tarefa a concluir: ")) - 1
-            lista_de_tarefas.concluir_tarefa(indice)
+            lista_de_tarefas.imprimir_tarefas()
+            try:
+                indice = int(input("Digite o número da tarefa a concluir: ")) - 1
+                lista_de_tarefas.concluir_tarefa(indice)
+            except ValueError:
+                print("Valor inválido!")
         elif opcao == "4":
             lista_de_tarefas.imprimir_tarefas()
         elif opcao == "5":
